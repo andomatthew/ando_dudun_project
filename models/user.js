@@ -22,20 +22,27 @@ module.exports = (sequelize, DataTypes) => {
     fullName() {
       return `${this.first_name} ${this.last_name}`
     }
+
+    totalCal() {
+      let calories = 0
+      if (this.Food.length) {
+        this.Food.forEach(food => {
+          calories += food.UserFoodRoutine.calories
+        })
+      }
+      return calories
+    }
   };
   User.init({
     username: DataTypes.STRING,
     password: DataTypes.STRING,
     first_name: DataTypes.STRING,
     last_name: DataTypes.STRING,
-    total_calories: {
-      type: DataTypes.INTEGER,
-    },
     email: DataTypes.STRING
   }, {
     hooks: {
       beforeCreate: (instance, options) => {
-        instance.password = hash_password(instance.password) 
+        instance.password = hash_password(instance.password)
       }
     },
     sequelize,

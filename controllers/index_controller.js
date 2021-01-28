@@ -29,13 +29,20 @@ class ControllerIndex {
           res.redirect('/users/' + user[0].id)
         }
         else {
-          res.redirect('/login')
+          console.log('=======')
+          let isTrue = compare(obj.password, user[0].password)
+          if (isTrue) {
+            console.log(user);
+            res.redirect(`/users/${user[0].id}`)
+          }
+          else {
+            res.redirect('/login')
+          }
         }
-      }
-    })
-    .catch(err => {
-      res.send(err.message)
-    })
+      })
+      .catch(err => {
+        res.send(err.message)
+      })
   }
 }
 

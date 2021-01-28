@@ -1,4 +1,3 @@
-const { raw } = require("express")
 const { User, UserFoodRoutine, Food } = require("../models")
 
 class ControllerUser {
@@ -35,11 +34,13 @@ class ControllerUser {
 
   static show_user(req, res) {
     const id = +req.params.id
+    let fullName;
 
     User.findByPk(id, { include: [Food] })
       .then(user => {
-        let fullName = user.fullName()
-        res.render("userProfile", { user, fullName })
+        fullName = user.fullName()
+        let daily_calories = user.totalCal()
+        res.render("userProfile", { user, fullName, daily_calories })
       })
       .catch(err => {
         res.send(err)
@@ -84,6 +85,7 @@ class ControllerUser {
       .then(data => {
         if (!data.length) {
           food.food_count = 1
+          food.calories += calorieData * food.food_count
           return UserFoodRoutine.create(food)
         } else {
           foodCount = data[0].food_count
