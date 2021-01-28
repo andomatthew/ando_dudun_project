@@ -3,7 +3,12 @@ const router = require('./routes/index')
 const session = require('express-session')
 const app = express()
 const port = 3000
+const cron = require("node-cron");
+const { UserFoodRoutine } = require("./models")
 
+cron.schedule('0 0 * * * *', () => {
+  UserFoodRoutine.destroy({ where: {} }).then(function () { });
+});
 
 app.set('view engine', 'ejs')
 

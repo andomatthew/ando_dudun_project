@@ -1,4 +1,6 @@
 const { User, UserFoodRoutine, Food } = require("../models")
+const formatDistance = require('date-fns/formatDistance')
+const nodemailer = require('nodemailer');
 
 class ControllerUser {
 
@@ -42,6 +44,9 @@ class ControllerUser {
       .then(user => {
         fullName = user.fullName()
         let daily_calories = user.totalCal()
+        // var result = formatDistance(new Date(2014, 6, 2), new Date(2015, 0, 1))
+        // let result = formatDistance(user.Food.UserFoodRoutine.updatedAt.toISOString().substring(0, 10), user.Food.UserFoodRoutine.createdAt.toISOString().substring(0, 10))
+        // console.log(result);
         res.render("userProfile", { user, fullName, daily_calories, session })
       })
       .catch(err => {
@@ -143,6 +148,38 @@ class ControllerUser {
     UserFoodRoutine.destroy({ where: { user_id: userId, food_id: foodId } })
       .then(() => {
         res.redirect(`/users/${req.params.id}`)
+      })
+      .catch(err => {
+        res.send(err)
+      })
+  }
+
+  static sendMail(req, res) {
+    const id = +req.params.id
+
+    User.findByPk(id, { include: [Food] })
+      .then(data => {
+        let daily_calories = data.totalCal()
+
+        let transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: 'pairprojectAD@gmail.com',
+            pass: 'ppAD123.'
+          }
+        }); const mailOptions = {
+          from: 'pairprojectAD@gmail.com  ',
+          to: `${data.email}`,
+          subject: 'Your Daily Calories Intake',
+          html: `<p>Your daily Calories Intake is ${daily_calories} kcal </p>`
+        }
+
+        transporter.sendMail(mailOptions, function (err, info) {
+          if (err) {
+            console.log(err);
+          }
+          res.redirect(`/users/${user.id}`)
+        })
       })
       .catch(err => {
         res.send(err)

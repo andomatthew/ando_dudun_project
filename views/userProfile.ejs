@@ -42,6 +42,7 @@
                 </td>
                 <td>
                     <a href="/users/<%= user.id %>/addFood">Add food</a>
+                    <a href="/users/<%= user.id %>/update">Edit Profile</a>
                 </td>
             </tr>
         </tbody>
@@ -73,6 +74,9 @@
                 <% }) %>
         </tbody>
     </table>
+    <div>
+        <a href="/users/<%= user.id %>/sendMail">Send me the info</a>
+    </div>
 </body>
 
 </html>
