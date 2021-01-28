@@ -23,10 +23,10 @@ class ControllerIndex {
         res.redirect('/login')
       }
       else {
-        console.log('=======')
         let isTrue = compare(obj.password, user[0].password)
         if(isTrue) {
-          res.redirect('/users/' + user.id)
+          req.session.user_id = user[0].id
+          res.redirect('/users/' + user[0].id)
         }
         else {
           res.redirect('/login')
