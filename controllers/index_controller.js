@@ -1,6 +1,7 @@
 class ControllerIndex {
   static index(req, res) {
-    res.send('masuk controller index')
+    res.render("index")
+    // res.send('masuk controller index')
   }
 }
 
