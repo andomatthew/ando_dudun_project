@@ -6,6 +6,7 @@ const routines = require('./routines_routes')
 //controller index
 const ControllerIndex = require('../controllers/index_controller')
 
+
 router.get('/', ControllerIndex.index)
 router.get('/login', ControllerIndex.getLogin)
 router.post('/login', ControllerIndex.postLogin)
