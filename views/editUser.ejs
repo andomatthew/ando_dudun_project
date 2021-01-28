@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+</head>
+
+<body>
+    <div>
+        <%- include("./partials/navbar"), {session} %>
+    </div>
+    <div>
+        <h1>Add User</h1>
+    </div>
+    <form action="/users/<%= data.id %>/update" method="post">
+        <div>
+            <label for="username">Username:</label>
+            <br>
+            <input type="text" name="username" value="<%= data.username %>">
+        </div>
+        <br>
+        <div>
+            <label for="password">Password:</label>
+            <br>
+            <input type="password" name="password" value="<%= data.password %>">
+        </div>
+        <br>
+        <div>
+            <label for="first_name">First Name:</label>
+            <br>
+            <input type="text" name="first_name" value="<%= data.first_name %>">
+        </div>
+        <br>
+        <div>
+            <label for="last_name">Last Name:</label>
+            <br>
+            <input type="text" name="last_name" value="<%= data.last_name %>">
+        </div>
+        <br>
+        <div>
+            <label for="email">Email:</label>
+            <br>
+            <input type="text" name="email" value="<%= data.email %>">
+        </div>
+        <div>
+            <button type="submit">Update!</button>
+        </div>
+    </form>
+</body>
+
+</html>

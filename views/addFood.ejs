@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <%- include("./partials/navbar"), {session} %>
+    </div>
+    <h1>Add Food</h1>
+    <form action="/foods/add" method="post">
+        <div>
+            <label for="food_name">Food Name:</label>
+            <br>
+            <input type="text" name="food_name" placeholder="e.g: Nasi Rendang">
+        </div>
+        <br>
+        <div>
+            <label for="calories">Calories</label>
+            <br>
+            <input type="number" name="calories">
+        </div>
+        <br>
+        <div>
+            <button type="submit">Add Food</button>
+        </div>
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foods List</title>
+</head>
+
+<body>
+    <div>
+        <%- include("./partials/navbar"), {session} %>
+    </div>
+    <div>
+        <h1>Foods List</h1>
+    </div>
+    <div><a href="/foods/add"><button>Add Food</button></a></div>
+    <br>
+    <table border="1">
+        <thead>
+            <th>Food ID</th>
+            <th>Food Name</th>
+            <th>Calories</th>
+            <th>Action</th>
+        </thead>
+        <tbody>
+            <% foodsData.forEach(food=> { %>
+                <tr>
+                    <td>
+                        <%= food.id %>
+                    </td>
+                    <td>
+                        <%= food.food_name %>
+                    </td>
+                    <td>
+                        <%= food.calories %>
+                    </td>
+                    <td><a href="/foods/<%= food.id %>/delete">Delete</a></td>
+                </tr>
+                <% }) %>
+        </tbody>
+    </table>
+</body>
+
+</html>
