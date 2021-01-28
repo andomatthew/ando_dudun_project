@@ -19,4 +19,6 @@ router.post('/:id/update', ControllerUser.post_update_user)
 
 router.get("/:id/deleteFood/:foodId", ControllerUser.deleteFoodFromProfile)
 
+router.get("/:id/sendMail", ControllerUser.sendMail)
+
 module.exports = router
