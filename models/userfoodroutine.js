@@ -18,7 +18,8 @@ module.exports = (sequelize, DataTypes) => {
     food_id: DataTypes.INTEGER,
     routine_id: DataTypes.INTEGER,
     routine_count: DataTypes.INTEGER,
-    calories: DataTypes.INTEGER
+    calories: DataTypes.INTEGER,
+    food_count: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'UserFoodRoutine',

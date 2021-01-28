@@ -37,6 +37,7 @@ class ControllerUser {
   static show_user(req, res) {
     const id = +req.params.id
 
+
     User.findByPk(id, { include: [Food]})
       .then(user => {
         let fullName = user.fullName()
@@ -69,22 +70,36 @@ class ControllerUser {
       user_id: +req.params.id,
       food_id: +req.body.foodId,
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
+      calories: 0,
+      food_count: 0
     }
 
-    let calories;
+    let calorieData;
+    let foodCount;
 
-    Food.findByPk(+req.body.foodId)
+    Food.findByPk(food.food_id)
       .then(data => {
-        calories = data.calories
-        food.calories = calories
-        return UserFoodRoutine.create(food)
+        calorieData = data.calories
+        return UserFoodRoutine.findAll({ where: { user_id: food.user_id, food_id: food.food_id } })
       })
       .then(data => {
+        if (!data.length) {
+          food.food_count = 1
+          return UserFoodRoutine.create(food)
+        } else {
+          foodCount = data[0].food_count
+          food.food_count = foodCount
+          food.food_count++
+          food.calories += calorieData * food.food_count
+          return UserFoodRoutine.update(food, { where: { user_id: food.user_id, food_id: food.food_id } })
+        }
+      })
+      .then(() => {
         res.redirect(`/users/${req.params.id}`)
       })
       .catch(err => {
-        res.send(err.message)
+        res.send(err)
       })
 
   }
@@ -123,7 +138,7 @@ class ControllerUser {
 
     UserFoodRoutine.destroy({ where: { user_id: userId, food_id: foodId } })
       .then(() => {
-        res.redirect(`users/${req.params.id}`)
+        res.redirect(`/users/${req.params.id}`)
       })
       .catch(err => {
         res.send(err)
