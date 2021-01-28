@@ -9,7 +9,7 @@
 
 <body>
     <div>
-        <%- include("./partials/navbar") %>
+        <%- include("./partials/navbar"), {session} %>
     </div>
     <h1>Add Food</h1>
     <form action="/foods/add" method="post">
