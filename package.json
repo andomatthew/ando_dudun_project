@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/andomatthew/ando_dudun_project#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "date-fns": "^2.16.1",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
