@@ -37,8 +37,7 @@ class ControllerUser {
   static show_user(req, res) {
     const id = +req.params.id
 
-
-    User.findByPk(id, { include: [Food]})
+    User.findByPk(id, { include: [Food] })
       .then(user => {
         let fullName = user.fullName()
         res.render("userProfile", { user, fullName })
@@ -108,28 +107,28 @@ class ControllerUser {
     let id = +req.params.id
 
     User.findByPk(id)
-    .then(user => {
-      res.render('editUser', { data: user })
-    })
-    .catch(err => {
-      res.send(err.message)
-    })
+      .then(user => {
+        res.render('editUser', { data: user })
+      })
+      .catch(err => {
+        res.send(err.message)
+      })
   }
 
   static post_update_user(req, res) {
     let id = +req.params.id
-    let { username, password, first_name, last_name,  email, createdAt } = req.body
-    let obj = { username, password, first_name, last_name,  email, createdAt, updatedAt: new Date() }
-  
+    let { username, password, first_name, last_name, email, createdAt } = req.body
+    let obj = { username, password, first_name, last_name, email, createdAt, updatedAt: new Date() }
+
     User.update(obj, {
       where: { id }
     })
-    .then(() => {
-      res.redirect(`/users/${id}`)
-    })
-    .catch(err => {
-      res.send(err.message)
-    })
+      .then(() => {
+        res.redirect(`/users/${id}`)
+      })
+      .catch(err => {
+        res.send(err.message)
+      })
   }
 
   static deleteFoodFromProfile(req, res) {
