@@ -16,6 +16,7 @@ class ControllerIndex {
       username: req.body.username,
       password: req.body.password
     }
+
     User.findAll({where: {username: obj.username}})
     .then(user => {
       if(!user.length) {
@@ -28,14 +29,21 @@ class ControllerIndex {
           res.redirect('/users/' + user[0].id)
         }
         else {
-          console.log('=======')
           let isTrue = compare(obj.password, user[0].password)
           if (isTrue) {
-            console.log(user);
-            res.redirect(`/users/${user[0].id}`)
+            req.session.user_id = user[0].id
+            res.redirect('/users/' + user[0].id)
           }
           else {
-            res.redirect('/login')
+            console.log('=======')
+            let isTrue = compare(obj.password, user[0].password)
+            if (isTrue) {
+              console.log(user);
+              res.redirect(`/users/${user[0].id}`)
+            }
+            else {
+              res.redirect('/login')
+            }
           }
         }
       })
