@@ -18,7 +18,6 @@ class ControllerIndex {
     }
     User.findAll({where: {username: obj.username}})
     .then(user => {
-      console.log(user)
       if(!user.length) {
         res.redirect('/login')
       }
@@ -44,6 +43,14 @@ class ControllerIndex {
         res.send(err.message)
       })
   }
+
+  static logOut(req, res) {
+    req.session.destroy((err) => {
+      res.redirect('/login')
+    })
+  }
+
+
 }
 
 module.exports = ControllerIndex
