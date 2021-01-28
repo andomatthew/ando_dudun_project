@@ -16,13 +16,19 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'user_id'
       })
     }
+
+    fullName() {
+      return `${this.first_name} ${this.last_name}`
+    }
   };
   User.init({
     username: DataTypes.STRING,
     password: DataTypes.STRING,
     first_name: DataTypes.STRING,
     last_name: DataTypes.STRING,
-    total_calories: DataTypes.INTEGER,
+    total_calories: {
+      type: DataTypes.INTEGER,
+    },
     email: DataTypes.STRING
   }, {
     sequelize,

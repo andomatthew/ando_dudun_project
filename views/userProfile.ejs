@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Profile</title>
+</head>
+
+<body>
+    <div>
+        <%- include("./partials/navbar") %>
+    </div>
+    <div>
+        <h1>
+            <%= fullName %>
+        </h1>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Unique Id</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Daily calories</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <%= user.id %>
+                </td>
+                <td>
+                    <%= user.username %>
+                </td>
+                <td>
+                    <%= user.email %>
+                </td>
+                <td>
+                    <%= user.total_calories %>
+                </td>
+                <td>
+                    <a href="/users/<%= user.id %>/addFood">Add food</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+        <h1>Your Food Today:</h1>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Food Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% user.Food.forEach((food,index)=> { %>
+                <tr>
+                    <td>
+                        <%= index + 1 %>
+                    </td>
+                    <td>
+                        <%= food.food_name %>
+                    </td>
+                    <td>
+                        <a href="/users/<%= user.id %>/deleteFood/<%=food.id%>">Delete</a>
+                    </td>
+                </tr>
+                <% }) %>
+        </tbody>
+    </table>
+</body>
+
+</html>

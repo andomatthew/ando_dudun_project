@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add your food intake</title>
+</head>
+
+<body>
+    <div>
+        <%- include("./partials/navbar") %>
+    </div>
+    <div>
+        <h1>Add Food intake</h1>
+        <h2>What did you eat today?</h2>
+    </div>
+    <div>
+        <form action="/users/<%= userData.id %>/addFood" method="post">
+            <div>
+                <label for="foodId">Food:</label>
+                <select name="foodId">
+                    <% foodsData.forEach(food=> { %>
+                        <option value="<%= food.id %>">
+                            <%= food.food_name %>
+                        </option>
+                        <% }) %>
+                </select>
+            </div>
+            <br>
+            <div><button type="submit">Add food</button></div>
+        </form>
+    </div>
+    <br>
+    <div>
+        <h2>Your food:</h2>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Food Name</th>
+                <th>Calories</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% userData.Food.forEach((food, index)=> { %>
+                <tr>
+                    <td>
+                        <%= index + 1%>
+                    </td>
+                    <td>
+                        <%= food.food_name %>
+                    </td>
+                    <td>
+                        <%= food.calories %>
+                    </td>
+                </tr>
+                <% }) %>
+        </tbody>
+    </table>
+</body>
+
+</html>
