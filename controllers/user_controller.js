@@ -7,7 +7,8 @@ class ControllerUser {
   }
 
   static add_user(req, res) {
-    res.render("addUser")
+    let session = req.session.user_id
+    res.render("addUser", { session })
   }
 
   static post_add_user(req, res) {
@@ -35,12 +36,13 @@ class ControllerUser {
   static show_user(req, res) {
     const id = +req.params.id
     let fullName;
+    let session = req.session.user_id
 
     User.findByPk(id, { include: [Food] })
       .then(user => {
         fullName = user.fullName()
         let daily_calories = user.totalCal()
-        res.render("userProfile", { user, fullName, daily_calories })
+        res.render("userProfile", { user, fullName, daily_calories, session })
       })
       .catch(err => {
         res.send(err)
@@ -50,6 +52,7 @@ class ControllerUser {
   static getAddFoodToProfile(req, res) {
     const id = +req.params.id
     let foodsData;
+    let session = req.session.user_id
 
     Food.findAll()
       .then(data => {
@@ -57,7 +60,7 @@ class ControllerUser {
         return User.findByPk(id, { include: [Food] })
       })
       .then(userData => {
-        res.render("addFoodToProfile", { foodsData, userData })
+        res.render("addFoodToProfile", { foodsData, userData, session })
       })
       .catch(err => {
         res.send(err)
@@ -106,10 +109,11 @@ class ControllerUser {
 
   static update_user(req, res) {
     let id = +req.params.id
+    let session = req.session.user_id
 
     User.findByPk(id)
       .then(user => {
-        res.render('editUser', { data: user })
+        res.render('editUser', { data: user, session })
       })
       .catch(err => {
         res.send(err.message)

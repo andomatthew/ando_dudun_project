@@ -3,11 +3,13 @@ const { compare } = require('../helper/bcrypt')
 
 class ControllerIndex {
   static index(req, res) {
-    res.render("index")
+    let session = req.session.user_id
+    res.render("index", { session })
   }
 
   static getLogin(req, res) {
-    res.render("login")
+    let session = req.session.user_id
+    res.render("login", { session })
   }
 
   static postLogin(req, res) {
@@ -17,16 +19,10 @@ class ControllerIndex {
       password: req.body.password
     }
 
-    User.findAll({where: {username: obj.username}})
-    .then(user => {
-      if(!user.length) {
-        res.redirect('/login')
-      }
-      else {
-        let isTrue = compare(obj.password, user[0].password)
-        if(isTrue) {
-          req.session.user_id = user[0].id
-          res.redirect('/users/' + user[0].id)
+    User.findAll({ where: { username: obj.username } })
+      .then(user => {
+        if (!user.length) {
+          res.redirect('/login')
         }
         else {
           let isTrue = compare(obj.password, user[0].password)
@@ -35,14 +31,20 @@ class ControllerIndex {
             res.redirect('/users/' + user[0].id)
           }
           else {
-            console.log('=======')
             let isTrue = compare(obj.password, user[0].password)
             if (isTrue) {
-              console.log(user);
-              res.redirect(`/users/${user[0].id}`)
+              req.session.user_id = user[0].id
+              res.redirect('/users/' + user[0].id)
             }
             else {
-              res.redirect('/login')
+              let isTrue = compare(obj.password, user[0].password)
+              if (isTrue) {
+                console.log(user);
+                res.redirect(`/users/${user[0].id}`)
+              }
+              else {
+                res.redirect('/login')
+              }
             }
           }
         }
