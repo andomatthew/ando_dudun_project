@@ -9,7 +9,6 @@ class ControllerUser {
 
   static add_user(req, res) {
     res.render("addUser")
-    // res.send('masuk add user (form')
   }
 
   static post_add_user(req, res) {
