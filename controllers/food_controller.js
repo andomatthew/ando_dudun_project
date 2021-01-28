@@ -33,7 +33,6 @@ class ControllerFood {
       .catch(err => {
         res.send(err.message)
       })
-    // res.send('masuk post add food')
   }
 
   static delete_food(req, res) {
